@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Pick a wallpaper from ~/Pictures/Wallpapers via wofi and apply theme.
+set -euo pipefail
+
+dir="${WALLPAPER_DIR:-$HOME/Pictures/Wallpapers}"
+mkdir -p "$dir"
+
+shopt -s nullglob nocaseglob
+mapfile -t files < <(find "$dir" -type f \( -iname '*.jpg' -o -iname '*.jpeg' \
+    -o -iname '*.png' -o -iname '*.webp' -o -iname '*.bmp' \) | sort)
+
+if [[ ${#files[@]} -eq 0 ]]; then
+    notify-send "Wallpaper picker" "No images in $dir" 2>/dev/null || \
+        echo "No images in $dir" >&2
+    exit 1
+fi
+
+# Build wofi entries: "img:PATH:text:NAME" — --allow-images renders thumbnails
+entries=""
+for f in "${files[@]}"; do
+    entries+="img:${f}:text:$(basename "$f")"$'\n'
+done
+
+choice="$(printf '%s' "$entries" | wofi \
+    --dmenu \
+    --prompt "Wallpaper" \
+    --allow-images \
+    --insensitive \
+    --width 640 --height 600)" || exit 0
+
+[[ -z "$choice" ]] && exit 0
+
+# wofi --allow-images echoes back the whole "img:PATH:text:NAME" line; extract NAME
+if [[ "$choice" == img:* ]]; then
+    choice="${choice##*:text:}"
+fi
+
+selected="$dir/$choice"
+if [[ ! -f "$selected" ]]; then
+    notify-send "Wallpaper picker" "not found: $selected" 2>/dev/null
+    echo "not found: $selected" >&2
+    exit 1
+fi
+
+exec "$HOME/.local/bin/set-wallpaper" "$selected"
