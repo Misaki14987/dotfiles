@@ -1,0 +1,11 @@
+# Wallust config — extract palette from wallpaper and render templates
+backend = "resized"
+color_space = "labmixed"
+palette = "dark16"
+threshold = 20
+check_contrast = true
+
+[templates]
+[templates.waybar]
+template = "waybar-colors.css"
+target = "~/.config/waybar/colors.css"

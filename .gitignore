@@ -1,0 +1,10 @@
+# wallust-generated, depends on current wallpaper
+waybar/.config/waybar/colors.css
+
+# nix flake lock — keep out unless you want to pin
+home-manager/.config/home-manager/flake.lock
+
+# editor / OS noise
+.DS_Store
+*.swp
+*~

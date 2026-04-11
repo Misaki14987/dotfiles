@@ -1,0 +1,117 @@
+/* Waybar style — dynamic theme from wallust */
+@import "colors.css";
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK SC", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @foreground;
+}
+
+/* The bar is a single rounded pill container */
+.modules-left,
+.modules-center,
+.modules-right {
+    background-color: alpha(@background, 0.78);
+    border: 1px solid alpha(@color8, 0.5);
+    border-radius: 18px;
+    padding: 2px 10px;
+    margin: 2px 0;
+}
+
+/* Individual modules — pill-shaped chips */
+#workspaces,
+#window,
+#clock,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#battery,
+#tray {
+    background-color: transparent;
+    color: @foreground;
+    padding: 2px 10px;
+    margin: 2px 3px;
+    border-radius: 14px;
+}
+
+/* Workspaces */
+#workspaces {
+    padding: 2px 4px;
+}
+#workspaces button {
+    color: alpha(@foreground, 0.6);
+    background-color: transparent;
+    padding: 0 8px;
+    margin: 2px 2px;
+    border-radius: 12px;
+    transition: all 200ms ease;
+}
+#workspaces button:hover {
+    background-color: alpha(@color4, 0.25);
+    color: @foreground;
+    box-shadow: none;
+    text-shadow: none;
+}
+#workspaces button.active {
+    background-color: alpha(@color4, 0.85);
+    color: @background;
+    padding: 0 14px;
+}
+#workspaces button.urgent {
+    background-color: alpha(@color1, 0.85);
+    color: @background;
+}
+
+/* Window title */
+#window {
+    color: alpha(@foreground, 0.85);
+    font-style: italic;
+}
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+/* Center clock — accent tinted */
+#clock {
+    color: @color6;
+    font-weight: 600;
+    padding: 2px 16px;
+}
+
+/* Right side chips — each gets a subtle tint using a single palette color */
+#cpu       { color: @color2; }
+#memory    { color: @color3; }
+#network   { color: @color4; }
+#pulseaudio{ color: @color5; }
+#battery   { color: @color6; }
+
+#battery.warning  { color: @color3; }
+#battery.critical { color: @color1; }
+#battery.charging { color: @color2; }
+
+#tray {
+    padding: 2px 8px;
+}
+#tray > .needs-attention {
+    background-color: alpha(@color1, 0.3);
+    border-radius: 10px;
+}
+
+tooltip {
+    background: alpha(@background, 0.95);
+    border: 1px solid @color8;
+    border-radius: 10px;
+}
+tooltip label {
+    color: @foreground;
+    padding: 4px;
+}
