@@ -8,6 +8,7 @@
     ./modules/rust.nix
     ./modules/environment.nix
     ./modules/dev.nix
+    ./modules/caelestia.nix
   ];
 
   home.username = "misaki";
